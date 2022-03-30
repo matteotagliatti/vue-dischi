@@ -9,8 +9,8 @@
           :key="index"
         />
       </div>
-      <div v-else>
-        <h1>No</h1>
+      <div v-else class="loader">
+        <LoaderDiv />
       </div>
     </div>
   </div>
@@ -18,6 +18,7 @@
 
 <script>
 import SingleCard from "./components/Card.vue";
+import LoaderDiv from "./components/Loader.vue";
 import axios from "axios";
 
 export default {
@@ -29,13 +30,19 @@ export default {
   },
   components: {
     SingleCard,
+    LoaderDiv,
   },
   mounted() {
-    axios
-      .get("https://flynn.boolean.careers/exercises/api/array/music")
-      .then((response) => {
-        this.music = response.data.response;
-      });
+    setTimeout(this.getAPI, 3000);
+  },
+  methods: {
+    getAPI() {
+      axios
+        .get("https://flynn.boolean.careers/exercises/api/array/music")
+        .then((response) => {
+          this.music = response.data.response;
+        });
+    },
   },
 };
 </script>
