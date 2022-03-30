@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <img :src="musicData.poster" alt="" />
+    <img :src="musicData.poster" :alt="musicData.title" />
     <p class="title">{{ musicData.title }}</p>
     <p>{{ musicData.author }}</p>
     <p>{{ musicData.year }}</p>
