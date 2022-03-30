@@ -1,28 +1,76 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img class="logo" src="@/assets/logo.png" alt="Logo" />
+    <div class="container">
+      <div v-if="music" class="grid">
+        <SingleCard
+          v-for="(music, index) in music"
+          :musicData="music"
+          :key="index"
+        />
+      </div>
+      <div v-else>
+        <h1>No</h1>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SingleCard from "./components/Card.vue";
+import axios from "axios";
 
 export default {
-  name: 'App',
+  name: "App",
+  data() {
+    return {
+      music: null,
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    SingleCard,
+  },
+  mounted() {
+    axios
+      .get("https://flynn.boolean.careers/exercises/api/array/music")
+      .then((response) => {
+        this.music = response.data.response;
+      });
+  },
+};
 </script>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #262626;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: sans-serif;
+  color: black;
+
+  .logo {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 50px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 4rem auto;
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1rem;
+    }
+  }
 }
 </style>
