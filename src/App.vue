@@ -1,6 +1,16 @@
 <template>
   <div id="app">
-    <img class="logo" src="@/assets/logo.png" alt="Logo" />
+    <header>
+      <img src="@/assets/logo.png" alt="Logo" />
+      <div class="select">
+        <select>
+          <option v-for="(genre, index) in genres" :value="genre" :key="index">
+            {{ genre }}
+          </option>
+        </select>
+      </div>
+    </header>
+
     <div class="container">
       <div v-if="music" class="grid">
         <SingleCard
@@ -26,6 +36,7 @@ export default {
   data() {
     return {
       music: null,
+      genres: [],
     };
   },
   components: {
@@ -33,7 +44,7 @@ export default {
     LoaderDiv,
   },
   mounted() {
-    setTimeout(this.getAPI, 3000);
+    setTimeout(this.getAPI, 100);
   },
   methods: {
     getAPI() {
@@ -41,6 +52,11 @@ export default {
         .get("https://flynn.boolean.careers/exercises/api/array/music")
         .then((response) => {
           this.music = response.data.response;
+          this.genres = Array.from(
+            new Set(response.data.response.map((music) => music.genre))
+          ); // populate array with unique values
+          console.log(this.genres);
+          console.log(this.music);
         });
     },
   },
@@ -62,11 +78,27 @@ html {
   font-family: sans-serif;
   color: black;
 
-  .logo {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    width: 50px;
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+
+    img {
+      width: 50px;
+    }
+
+    select {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 0.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #262626;
+      background-color: white;
+      cursor: pointer;
+    }
   }
 
   .container {
