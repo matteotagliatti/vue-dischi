@@ -3,9 +3,14 @@
     <header>
       <img src="@/assets/logo.png" alt="Logo" />
       <div class="select">
-        <select>
-          <option disabled selected value>-- select an option --</option>
-          <option v-for="(genre, index) in genres" :value="genre" :key="index">
+        <select v-model="genreToSearch">
+          <option selected value>-- all the genres --</option>
+          <option
+            v-for="(genre, index) in genres"
+            :value="genre"
+            :key="index"
+            @click="setGenre"
+          >
             {{ genre }}
           </option>
         </select>
@@ -15,7 +20,7 @@
     <div class="container">
       <div v-if="music" class="grid">
         <SingleCard
-          v-for="(music, index) in music"
+          v-for="(music, index) in setGenre()"
           :musicData="music"
           :key="index"
         />
@@ -38,6 +43,7 @@ export default {
     return {
       music: null,
       genres: [],
+      genreToSearch: "",
     };
   },
   components: {
@@ -59,6 +65,11 @@ export default {
           console.log(this.genres);
           console.log(this.music);
         });
+    },
+    setGenre() {
+      return this.music.filter((element) =>
+        element.genre.includes(this.genreToSearch)
+      );
     },
   },
 };
