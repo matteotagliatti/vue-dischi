@@ -61,11 +61,6 @@ export default {
           console.log(this.music);
         });
     },
-    /* setGenre() {
-      return this.music.filter((element) =>
-        element.genre.includes(this.genreToSearch)
-      );
-    }, */
   },
   computed: {
     setGenre() {
