@@ -5,12 +5,7 @@
       <div class="select">
         <select v-model="genreToSearch">
           <option selected value>-- all the genres --</option>
-          <option
-            v-for="(genre, index) in genres"
-            :value="genre"
-            :key="index"
-            @click="setGenre"
-          >
+          <option v-for="(genre, index) in genres" :value="genre" :key="index">
             {{ genre }}
           </option>
         </select>
@@ -20,7 +15,7 @@
     <div class="container">
       <div v-if="music" class="grid">
         <SingleCard
-          v-for="(music, index) in setGenre()"
+          v-for="(music, index) in setGenre"
           :musicData="music"
           :key="index"
         />
@@ -66,6 +61,13 @@ export default {
           console.log(this.music);
         });
     },
+    /* setGenre() {
+      return this.music.filter((element) =>
+        element.genre.includes(this.genreToSearch)
+      );
+    }, */
+  },
+  computed: {
     setGenre() {
       return this.music.filter((element) =>
         element.genre.includes(this.genreToSearch)
