@@ -4,6 +4,7 @@
       <img src="@/assets/logo.png" alt="Logo" />
       <div class="select">
         <select>
+          <option disabled selected value>-- select an option --</option>
           <option v-for="(genre, index) in genres" :value="genre" :key="index">
             {{ genre }}
           </option>
@@ -77,6 +78,7 @@ html {
 #app {
   font-family: sans-serif;
   color: black;
+  min-width: 1100px;
 
   header {
     display: flex;
